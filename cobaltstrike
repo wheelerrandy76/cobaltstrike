@@ -1,0 +1,826 @@
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+
+	<!-- This site is optimized with the Yoast SEO plugin v19.14 - https://yoast.com/wordpress/plugins/seo/ -->
+	<title>Cobalt Strike 4.8: (System) Call Me Maybe | Cobalt Strike Blog</title>
+	<meta name="description" content="Cobalt Strike 4.8 is live, with support for direct and indirect system calls, options to specify payload guardrails, a token store and more." />
+	<link rel="canonical" href="https://www.cobaltstrike.com/blog/cobalt-strike-4-8-system-call-me-maybe" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="Cobalt Strike 4.8: (System) Call Me Maybe | Cobalt Strike Blog" />
+	<meta property="og:description" content="Cobalt Strike 4.8 is live, with support for direct and indirect system calls, options to specify payload guardrails, a token store and more." />
+	<meta property="og:url" content="https://www.cobaltstrike.com/blog/cobalt-strike-4-8-system-call-me-maybe" />
+	<meta property="og:site_name" content="Cobalt Strike" />
+	<meta property="article:published_time" content="2023-03-07T20:56:48+00:00" />
+	<meta property="article:modified_time" content="2023-07-13T22:03:23+00:00" />
+	<meta property="og:image" content="https://www.cobaltstrike.com/app/uploads/2023/07/image-2.png" />
+	<meta name="author" content="csprod1" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:label1" content="Written by" />
+	<meta name="twitter:data1" content="csprod1" />
+	<meta name="twitter:label2" content="Est. reading time" />
+	<meta name="twitter:data2" content="13 minutes" />
+	<script type="application/ld+json" class="yoast-schema-graph">{"@context":"https://schema.org","@graph":[{"@type":"Article","@id":"https://www.cobaltstrike.com/blog/cobalt-strike-4-8-system-call-me-maybe/#article","isPartOf":{"@id":"https://www.cobaltstrike.com/blog/cobalt-strike-4-8-system-call-me-maybe/"},"author":{"name":"csprod1","@id":"https://www.cobaltstrike.com/#/schema/person/5517992a1e7d35890d86b3cd67227c7e"},"headline":"Cobalt Strike 4.8: (System) Call Me Maybe","datePublished":"2023-03-07T20:56:48+00:00","dateModified":"2023-07-13T22:03:23+00:00","mainEntityOfPage":{"@id":"https://www.cobaltstrike.com/blog/cobalt-strike-4-8-system-call-me-maybe/"},"wordCount":2633,"publisher":{"@id":"https://www.cobaltstrike.com/#organization"},"image":{"@id":"https://www.cobaltstrike.com/blog/cobalt-strike-4-8-system-call-me-maybe/#primaryimage"},"thumbnailUrl":"https://www.cobaltstrike.com/app/uploads/2023/07/image-2.png","inLanguage":"en-US"},{"@type":"WebPage","@id":"https://www.cobaltstrike.com/blog/cobalt-strike-4-8-system-call-me-maybe/","url":"https://www.cobaltstrike.com/blog/cobalt-strike-4-8-system-call-me-maybe/","name":"Cobalt Strike 4.8: (System) Call Me Maybe | Cobalt Strike Blog","isPartOf":{"@id":"https://www.cobaltstrike.com/#website"},"primaryImageOfPage":{"@id":"https://www.cobaltstrike.com/blog/cobalt-strike-4-8-system-call-me-maybe/#primaryimage"},"image":{"@id":"https://www.cobaltstrike.com/blog/cobalt-strike-4-8-system-call-me-maybe/#primaryimage"},"thumbnailUrl":"https://www.cobaltstrike.com/app/uploads/2023/07/image-2.png","datePublished":"2023-03-07T20:56:48+00:00","dateModified":"2023-07-13T22:03:23+00:00","description":"Cobalt Strike 4.8 is live, with support for direct and indirect system calls, options to specify payload guardrails, a token store and more.","breadcrumb":{"@id":"https://www.cobaltstrike.com/blog/cobalt-strike-4-8-system-call-me-maybe/#breadcrumb"},"inLanguage":"en-US","potentialAction":[{"@type":"ReadAction","target":["https://www.cobaltstrike.com/blog/cobalt-strike-4-8-system-call-me-maybe/"]}]},{"@type":"ImageObject","inLanguage":"en-US","@id":"https://www.cobaltstrike.com/blog/cobalt-strike-4-8-system-call-me-maybe/#primaryimage","url":"https://www.cobaltstrike.com/app/uploads/2023/07/image-2.png","contentUrl":"https://www.cobaltstrike.com/app/uploads/2023/07/image-2.png","width":440,"height":370},{"@type":"BreadcrumbList","@id":"https://www.cobaltstrike.com/blog/cobalt-strike-4-8-system-call-me-maybe/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.cobaltstrike.com/"},{"@type":"ListItem","position":2,"name":"Blog","item":"/blog/"},{"@type":"ListItem","position":3,"name":"Cobalt Strike 4.8: (System) Call Me Maybe"}]},{"@type":"WebSite","@id":"https://www.cobaltstrike.com/#website","url":"https://www.cobaltstrike.com/","name":"Cobalt Strike","description":"Adversary Simulation and Red Team Operations","publisher":{"@id":"https://www.cobaltstrike.com/#organization"},"potentialAction":[{"@type":"SearchAction","target":{"@type":"EntryPoint","urlTemplate":"https://www.cobaltstrike.com/?s={search_term_string}"},"query-input":"required name=search_term_string"}],"inLanguage":"en-US"},{"@type":"Organization","@id":"https://www.cobaltstrike.com/#organization","name":"Cobalt Strike","url":"https://www.cobaltstrike.com/","logo":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://www.cobaltstrike.com/#/schema/logo/image/","url":"https://www.cobaltstrike.com/app/uploads/2023/06/fta-cobalt-strike-light-1.svg","contentUrl":"https://www.cobaltstrike.com/app/uploads/2023/06/fta-cobalt-strike-light-1.svg","width":242,"height":73,"caption":"Cobalt Strike"},"image":{"@id":"https://www.cobaltstrike.com/#/schema/logo/image/"}},{"@type":"Person","@id":"https://www.cobaltstrike.com/#/schema/person/5517992a1e7d35890d86b3cd67227c7e","name":"csprod1","image":{"@type":"ImageObject","inLanguage":"en-US","@id":"https://www.cobaltstrike.com/#/schema/person/image/","url":"https://secure.gravatar.com/avatar/9deae6d401feca817fc4f7786a74d827?s=96&d=mm&r=g","contentUrl":"https://secure.gravatar.com/avatar/9deae6d401feca817fc4f7786a74d827?s=96&d=mm&r=g","caption":"csprod1"},"url":"https://www.cobaltstrike.com/author/csprod1"}]}</script>
+	<!-- / Yoast SEO plugin. -->
+
+
+<link rel='dns-prefetch' href='//www.cobaltstrike.com' />
+<link rel="alternate" type="application/rss+xml" title="Cobalt Strike &raquo; Feed" href="https://www.cobaltstrike.com/feed" />
+<script>
+window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/72x72\/","ext":".png","svgUrl":"https:\/\/s.w.org\/images\/core\/emoji\/14.0.0\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/www.cobaltstrike.com\/wp\/wp-includes\/js\/wp-emoji-release.min.js?ver=6.2.2"}};
+/*! This file is auto-generated */
+!function(e,a,t){var n,r,o,i=a.createElement("canvas"),p=i.getContext&&i.getContext("2d");function s(e,t){p.clearRect(0,0,i.width,i.height),p.fillText(e,0,0);e=i.toDataURL();return p.clearRect(0,0,i.width,i.height),p.fillText(t,0,0),e===i.toDataURL()}function c(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(o=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},r=0;r<o.length;r++)t.supports[o[r]]=function(e){if(p&&p.fillText)switch(p.textBaseline="top",p.font="600 32px Arial",e){case"flag":return s("\ud83c\udff3\ufe0f\u200d\u26a7\ufe0f","\ud83c\udff3\ufe0f\u200b\u26a7\ufe0f")?!1:!s("\ud83c\uddfa\ud83c\uddf3","\ud83c\uddfa\u200b\ud83c\uddf3")&&!s("\ud83c\udff4\udb40\udc67\udb40\udc62\udb40\udc65\udb40\udc6e\udb40\udc67\udb40\udc7f","\ud83c\udff4\u200b\udb40\udc67\u200b\udb40\udc62\u200b\udb40\udc65\u200b\udb40\udc6e\u200b\udb40\udc67\u200b\udb40\udc7f");case"emoji":return!s("\ud83e\udef1\ud83c\udffb\u200d\ud83e\udef2\ud83c\udfff","\ud83e\udef1\ud83c\udffb\u200b\ud83e\udef2\ud83c\udfff")}return!1}(o[r]),t.supports.everything=t.supports.everything&&t.supports[o[r]],"flag"!==o[r]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[o[r]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(e=t.source||{}).concatemoji?c(e.concatemoji):e.wpemoji&&e.twemoji&&(c(e.twemoji),c(e.wpemoji)))}(window,document,window._wpemojiSettings);
+</script>
+<style>
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 0.07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='wp-block-library-css' href='https://www.cobaltstrike.com/wp/wp-includes/css/dist/block-library/style.min.css?ver=6.2.2' media='all' />
+<link rel='stylesheet' id='basic-card-style-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/basic-card/style.min.css?ver=6.2.2' media='all' />
+<link rel='stylesheet' id='card-carousel-style-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/card-carousel/style.min.css?ver=6.2.2' media='all' />
+<link rel='stylesheet' id='checklist-style-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/checklist/style.min.css?ver=6.2.2' media='all' />
+<link rel='stylesheet' id='checkmark-style-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/checkmark/style.min.css?ver=6.2.2' media='all' />
+<link rel='stylesheet' id='diagonal-icons-style-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/diagonal-icons/style.min.css?ver=6.2.2' media='all' />
+<link rel='stylesheet' id='embed-form-style-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/embed-form/style.min.css?ver=6.2.2' media='all' />
+<link rel='stylesheet' id='event-style-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/event/style.min.css?ver=6.2.2' media='all' />
+<link rel='stylesheet' id='faq-style-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/faq/style.min.css?ver=6.2.2' media='all' />
+<link rel='stylesheet' id='image-carousel-style-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/image-carousel/style.min.css?ver=6.2.2' media='all' />
+<link rel='stylesheet' id='large-circle-icons-style-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/large-circle-icons/style.min.css?ver=6.2.2' media='all' />
+<link rel='stylesheet' id='logo-carousel-style-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/logo-carousel/style.min.css?ver=6.2.2' media='all' />
+<link rel='stylesheet' id='resource-style-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/resource/style.min.css?ver=6.2.2' media='all' />
+<link rel='stylesheet' id='tab-style-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/tab/style.min.css?ver=6.2.2' media='all' />
+<link rel='stylesheet' id='testimonial-style-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/testimonial/style.min.css?ver=6.2.2' media='all' />
+<link rel='stylesheet' id='testimonial-carousel-style-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/testimonial-carousel/style.min.css?ver=6.2.2' media='all' />
+<link rel='stylesheet' id='vertical-dot-line-style-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/vertical-dot-line/style.min.css?ver=6.2.2' media='all' />
+<link rel='stylesheet' id='vertical-timeline-left-style-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/vertical-timeline-left/style.min.css?ver=6.2.2' media='all' />
+<link rel='stylesheet' id='vertical-timeline-right-style-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/vertical-timeline-right/style.min.css?ver=6.2.2' media='all' />
+<style id='global-styles-inline-css'>
+body{--wp--preset--color--black: #000000;--wp--preset--color--cyan-bluish-gray: #abb8c3;--wp--preset--color--white: #ffffff;--wp--preset--color--pale-pink: #f78da7;--wp--preset--color--vivid-red: #cf2e2e;--wp--preset--color--luminous-vivid-orange: #ff6900;--wp--preset--color--luminous-vivid-amber: #fcb900;--wp--preset--color--light-green-cyan: #7bdcb5;--wp--preset--color--vivid-green-cyan: #00d084;--wp--preset--color--pale-cyan-blue: #8ed1fc;--wp--preset--color--vivid-cyan-blue: #0693e3;--wp--preset--color--vivid-purple: #9b51e0;--wp--preset--color--lichen: #70A59A;--wp--preset--color--fern: #4D7F71;--wp--preset--color--forest: #006A56;--wp--preset--color--dusk: #004442;--wp--preset--color--sky: #8FE5F2;--wp--preset--color--cream: #E3E3E3;--wp--preset--color--mint: #77ECC2;--wp--preset--color--beige: #EBDBC1;--wp--preset--color--blue: #11719C;--wp--preset--color--navy: #004667;--wp--preset--color--gray: #A9A9A9;--wp--preset--color--charchoal: #363e49;--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%);--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg,rgb(122,220,180) 0%,rgb(0,208,130) 100%);--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg,rgba(252,185,0,1) 0%,rgba(255,105,0,1) 100%);--wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg,rgba(255,105,0,1) 0%,rgb(207,46,46) 100%);--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg,rgb(238,238,238) 0%,rgb(169,184,195) 100%);--wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg,rgb(74,234,220) 0%,rgb(151,120,209) 20%,rgb(207,42,186) 40%,rgb(238,44,130) 60%,rgb(251,105,98) 80%,rgb(254,248,76) 100%);--wp--preset--gradient--blush-light-purple: linear-gradient(135deg,rgb(255,206,236) 0%,rgb(152,150,240) 100%);--wp--preset--gradient--blush-bordeaux: linear-gradient(135deg,rgb(254,205,165) 0%,rgb(254,45,45) 50%,rgb(107,0,62) 100%);--wp--preset--gradient--luminous-dusk: linear-gradient(135deg,rgb(255,203,112) 0%,rgb(199,81,192) 50%,rgb(65,88,208) 100%);--wp--preset--gradient--pale-ocean: linear-gradient(135deg,rgb(255,245,203) 0%,rgb(182,227,212) 50%,rgb(51,167,181) 100%);--wp--preset--gradient--electric-grass: linear-gradient(135deg,rgb(202,248,128) 0%,rgb(113,206,126) 100%);--wp--preset--gradient--midnight: linear-gradient(135deg,rgb(2,3,129) 0%,rgb(40,116,252) 100%);--wp--preset--font-size--small: 13px;--wp--preset--font-size--medium: 20px;--wp--preset--font-size--large: 36px;--wp--preset--font-size--x-large: 42px;--wp--preset--spacing--20: 0.44rem;--wp--preset--spacing--30: 0.67rem;--wp--preset--spacing--40: 1rem;--wp--preset--spacing--50: 1.5rem;--wp--preset--spacing--60: 2.25rem;--wp--preset--spacing--70: 3.38rem;--wp--preset--spacing--80: 5.06rem;--wp--preset--shadow--natural: 6px 6px 9px rgba(0, 0, 0, 0.2);--wp--preset--shadow--deep: 12px 12px 50px rgba(0, 0, 0, 0.4);--wp--preset--shadow--sharp: 6px 6px 0px rgba(0, 0, 0, 0.2);--wp--preset--shadow--outlined: 6px 6px 0px -3px rgba(255, 255, 255, 1), 6px 6px rgba(0, 0, 0, 1);--wp--preset--shadow--crisp: 6px 6px 0px rgba(0, 0, 0, 1);}body { margin: 0;--wp--style--global--content-size: 1100px;--wp--style--global--wide-size: 1100px; }.wp-site-blocks > .alignleft { float: left; margin-right: 2em; }.wp-site-blocks > .alignright { float: right; margin-left: 2em; }.wp-site-blocks > .aligncenter { justify-content: center; margin-left: auto; margin-right: auto; }:where(.is-layout-flex){gap: 0.5em;}body .is-layout-flow > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-flow > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-flow > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignleft{float: left;margin-inline-start: 0;margin-inline-end: 2em;}body .is-layout-constrained > .alignright{float: right;margin-inline-start: 2em;margin-inline-end: 0;}body .is-layout-constrained > .aligncenter{margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > :where(:not(.alignleft):not(.alignright):not(.alignfull)){max-width: var(--wp--style--global--content-size);margin-left: auto !important;margin-right: auto !important;}body .is-layout-constrained > .alignwide{max-width: var(--wp--style--global--wide-size);}body .is-layout-flex{display: flex;}body .is-layout-flex{flex-wrap: wrap;align-items: center;}body .is-layout-flex > *{margin: 0;}body{padding-top: 0px;padding-right: 0px;padding-bottom: 0px;padding-left: 0px;}a:where(:not(.wp-element-button)){text-decoration: underline;}.wp-element-button, .wp-block-button__link{background-color: #006A56;border-width: 0;color: #ffffff;font-family: inherit;font-size: inherit;line-height: inherit;padding: calc(0.667em + 2px) calc(1.333em + 2px);text-decoration: none;}.wp-element-button:hover, .wp-block-button__link:hover{background-color: #004442;color: #ffffff;}.wp-element-button:focus, .wp-block-button__link:focus{background-color: #004442;color: #ffffff;}.wp-element-button:active, .wp-block-button__link:active{background-color: #004442;color: #ffffff;}.has-black-color{color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-color{color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-color{color: var(--wp--preset--color--white) !important;}.has-pale-pink-color{color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-color{color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-color{color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-color{color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-color{color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-color{color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-color{color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-color{color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-color{color: var(--wp--preset--color--vivid-purple) !important;}.has-lichen-color{color: var(--wp--preset--color--lichen) !important;}.has-fern-color{color: var(--wp--preset--color--fern) !important;}.has-forest-color{color: var(--wp--preset--color--forest) !important;}.has-dusk-color{color: var(--wp--preset--color--dusk) !important;}.has-sky-color{color: var(--wp--preset--color--sky) !important;}.has-cream-color{color: var(--wp--preset--color--cream) !important;}.has-mint-color{color: var(--wp--preset--color--mint) !important;}.has-beige-color{color: var(--wp--preset--color--beige) !important;}.has-blue-color{color: var(--wp--preset--color--blue) !important;}.has-navy-color{color: var(--wp--preset--color--navy) !important;}.has-gray-color{color: var(--wp--preset--color--gray) !important;}.has-charchoal-color{color: var(--wp--preset--color--charchoal) !important;}.has-black-background-color{background-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-background-color{background-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-background-color{background-color: var(--wp--preset--color--white) !important;}.has-pale-pink-background-color{background-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-background-color{background-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-background-color{background-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-background-color{background-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-background-color{background-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-background-color{background-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-background-color{background-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-background-color{background-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-background-color{background-color: var(--wp--preset--color--vivid-purple) !important;}.has-lichen-background-color{background-color: var(--wp--preset--color--lichen) !important;}.has-fern-background-color{background-color: var(--wp--preset--color--fern) !important;}.has-forest-background-color{background-color: var(--wp--preset--color--forest) !important;}.has-dusk-background-color{background-color: var(--wp--preset--color--dusk) !important;}.has-sky-background-color{background-color: var(--wp--preset--color--sky) !important;}.has-cream-background-color{background-color: var(--wp--preset--color--cream) !important;}.has-mint-background-color{background-color: var(--wp--preset--color--mint) !important;}.has-beige-background-color{background-color: var(--wp--preset--color--beige) !important;}.has-blue-background-color{background-color: var(--wp--preset--color--blue) !important;}.has-navy-background-color{background-color: var(--wp--preset--color--navy) !important;}.has-gray-background-color{background-color: var(--wp--preset--color--gray) !important;}.has-charchoal-background-color{background-color: var(--wp--preset--color--charchoal) !important;}.has-black-border-color{border-color: var(--wp--preset--color--black) !important;}.has-cyan-bluish-gray-border-color{border-color: var(--wp--preset--color--cyan-bluish-gray) !important;}.has-white-border-color{border-color: var(--wp--preset--color--white) !important;}.has-pale-pink-border-color{border-color: var(--wp--preset--color--pale-pink) !important;}.has-vivid-red-border-color{border-color: var(--wp--preset--color--vivid-red) !important;}.has-luminous-vivid-orange-border-color{border-color: var(--wp--preset--color--luminous-vivid-orange) !important;}.has-luminous-vivid-amber-border-color{border-color: var(--wp--preset--color--luminous-vivid-amber) !important;}.has-light-green-cyan-border-color{border-color: var(--wp--preset--color--light-green-cyan) !important;}.has-vivid-green-cyan-border-color{border-color: var(--wp--preset--color--vivid-green-cyan) !important;}.has-pale-cyan-blue-border-color{border-color: var(--wp--preset--color--pale-cyan-blue) !important;}.has-vivid-cyan-blue-border-color{border-color: var(--wp--preset--color--vivid-cyan-blue) !important;}.has-vivid-purple-border-color{border-color: var(--wp--preset--color--vivid-purple) !important;}.has-lichen-border-color{border-color: var(--wp--preset--color--lichen) !important;}.has-fern-border-color{border-color: var(--wp--preset--color--fern) !important;}.has-forest-border-color{border-color: var(--wp--preset--color--forest) !important;}.has-dusk-border-color{border-color: var(--wp--preset--color--dusk) !important;}.has-sky-border-color{border-color: var(--wp--preset--color--sky) !important;}.has-cream-border-color{border-color: var(--wp--preset--color--cream) !important;}.has-mint-border-color{border-color: var(--wp--preset--color--mint) !important;}.has-beige-border-color{border-color: var(--wp--preset--color--beige) !important;}.has-blue-border-color{border-color: var(--wp--preset--color--blue) !important;}.has-navy-border-color{border-color: var(--wp--preset--color--navy) !important;}.has-gray-border-color{border-color: var(--wp--preset--color--gray) !important;}.has-charchoal-border-color{border-color: var(--wp--preset--color--charchoal) !important;}.has-vivid-cyan-blue-to-vivid-purple-gradient-background{background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;}.has-light-green-cyan-to-vivid-green-cyan-gradient-background{background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;}.has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;}.has-luminous-vivid-orange-to-vivid-red-gradient-background{background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;}.has-very-light-gray-to-cyan-bluish-gray-gradient-background{background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;}.has-cool-to-warm-spectrum-gradient-background{background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;}.has-blush-light-purple-gradient-background{background: var(--wp--preset--gradient--blush-light-purple) !important;}.has-blush-bordeaux-gradient-background{background: var(--wp--preset--gradient--blush-bordeaux) !important;}.has-luminous-dusk-gradient-background{background: var(--wp--preset--gradient--luminous-dusk) !important;}.has-pale-ocean-gradient-background{background: var(--wp--preset--gradient--pale-ocean) !important;}.has-electric-grass-gradient-background{background: var(--wp--preset--gradient--electric-grass) !important;}.has-midnight-gradient-background{background: var(--wp--preset--gradient--midnight) !important;}.has-small-font-size{font-size: var(--wp--preset--font-size--small) !important;}.has-medium-font-size{font-size: var(--wp--preset--font-size--medium) !important;}.has-large-font-size{font-size: var(--wp--preset--font-size--large) !important;}.has-x-large-font-size{font-size: var(--wp--preset--font-size--x-large) !important;}
+.wp-block-navigation a:where(:not(.wp-element-button)){color: inherit;}
+:where(.wp-block-columns.is-layout-flex){gap: 2em;}
+.wp-block-pullquote{font-size: 1.5em;line-height: 1.6;}
+</style>
+<link rel='stylesheet' id='search-filter-plugin-styles-css' href='https://www.cobaltstrike.com/app/plugins/search-filter-pro/public/assets/css/search-filter.min.css?ver=2.5.11' media='all' />
+<link rel='stylesheet' id='understrap-styles-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/css/style.min.css?ver=1' media='all' />
+<link rel='stylesheet' id='swiper-css' href='https://www.cobaltstrike.com/app/themes/helpsystems/js/swiper/swiper-bundle.min.css?ver=8.4.4' media='all' />
+<link rel='stylesheet' id='dashicons-css' href='https://www.cobaltstrike.com/wp/wp-includes/css/dashicons.min.css?ver=6.2.2' media='all' />
+<script src='https://www.cobaltstrike.com/wp/wp-includes/js/jquery/jquery.min.js?ver=3.6.4' id='jquery-core-js'></script>
+<script src='https://www.cobaltstrike.com/wp/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.0' id='jquery-migrate-js'></script>
+<script id='search-filter-plugin-build-js-extra'>
+var SF_LDATA = {"ajax_url":"https:\/\/www.cobaltstrike.com\/wp\/wp-admin\/admin-ajax.php","home_url":"https:\/\/www.cobaltstrike.com\/","extensions":[]};
+</script>
+<script src='https://www.cobaltstrike.com/app/plugins/search-filter-pro/public/assets/js/search-filter-build.min.js?ver=2.5.11' id='search-filter-plugin-build-js'></script>
+<script src='https://www.cobaltstrike.com/app/plugins/search-filter-pro/public/assets/js/chosen.jquery.min.js?ver=2.5.11' id='search-filter-plugin-chosen-js'></script>
+<script src='https://www.cobaltstrike.com/app/themes/helpsystems/js/popper.min.js?ver=6.2.2' id='popper-js-js'></script>
+<script src='https://www.cobaltstrike.com/app/themes/helpsystems/js/bootstrap.bundle.min.js?ver=6.2.2' id='bootstrap4-js-js'></script>
+<script src='https://www.cobaltstrike.com/app/themes/helpsystems/js/shuffle.min.js?ver=6.2.2' id='shuffle-js-js'></script>
+<script src='https://www.cobaltstrike.com/app/themes/helpsystems/js/custom-javascript.js?ver=1' id='understrap-js-js'></script>
+<script src='https://www.cobaltstrike.com/app/themes/helpsystems/js/swiper/swiper-bundle.min.js?ver=8.4.4' id='swiper-js'></script>
+<link rel="https://api.w.org/" href="https://www.cobaltstrike.com/wp-json/" /><link rel="alternate" type="application/json" href="https://www.cobaltstrike.com/wp-json/wp/v2/posts/2877" /><link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.cobaltstrike.com/wp/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://www.cobaltstrike.com/wp/wp-includes/wlwmanifest.xml" />
+<meta name="generator" content="WordPress 6.2.2" />
+<link rel='shortlink' href='https://www.cobaltstrike.com/?p=2877' />
+<link rel="alternate" type="application/json+oembed" href="https://www.cobaltstrike.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.cobaltstrike.com%2Fblog%2Fcobalt-strike-4-8-system-call-me-maybe" />
+<link rel="alternate" type="text/xml+oembed" href="https://www.cobaltstrike.com/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fwww.cobaltstrike.com%2Fblog%2Fcobalt-strike-4-8-system-call-me-maybe&#038;format=xml" />
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Cobalt Strike - Adversary Simulation and Red Team Operations">
+<link rel="icon" href="https://www.cobaltstrike.com/app/uploads/2023/06/cropped-android-chrome-512x512-2-32x32.png" sizes="32x32" />
+<link rel="icon" href="https://www.cobaltstrike.com/app/uploads/2023/06/cropped-android-chrome-512x512-2-192x192.png" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://www.cobaltstrike.com/app/uploads/2023/06/cropped-android-chrome-512x512-2-180x180.png" />
+<meta name="msapplication-TileImage" content="https://www.cobaltstrike.com/app/uploads/2023/06/cropped-android-chrome-512x512-2-270x270.png" />
+</head>
+
+<body class="post-template-default single single-post postid-2877 single-format-standard wp-custom-logo wp-embed-responsive group-blog understrap-has-sidebar">
+
+<div class="site" id="page">
+
+	<!-- ******************* The Navbar Area ******************* -->
+	<header id="wrapper-navbar" class="sticky-top">
+
+		<a class="skip-link sr-only sr-only-focusable" href="#content">Skip to content</a>
+
+			<nav id="top-nav" class="d-none d-xl-block d-lg-block navbar navbar-expand-md navbar-dark py-3" >
+			<div class="container-fluid">
+				<a href="https://www.fortra.com/" target="_blank"><img src="https://www.cobaltstrike.com/app/themes/helpsystems/img/Fortra-Logo-TM-SkyBlue.svg" alt="fortra logo"></a>
+			<ul id="top-menu" class="ml-auto navbar-nav"><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2236" class="menu-item-2236 nav-item"><a title="Blog" href="/blog" class="nav-link text-nowrap  menu-item menu-item-type-custom menu-item-object-custom">Blog</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2239" class="menu-item-2239 nav-item"><a title="Download" target="_blank" rel="noopener noreferrer" href="https://download.cobaltstrike.com/download" class="nav-link text-nowrap  menu-item menu-item-type-custom menu-item-object-custom">Download</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2237" class="menu-item-2237 nav-item"><a title="Contact Us" href="/contact" class="nav-link text-nowrap  menu-item menu-item-type-custom menu-item-object-custom">Contact Us</a></li>
+</ul>			</div><!-- .container -->
+		</nav>
+	<nav id="main-nav" class="navbar navbar-expand-lg navbar-dark pb-lg-0" aria-labelledby="main-nav-label">
+			<div class="container-fluid pr-lg-0 d-flex align-items-lg-end">
+			<h2 id="main-nav-label" class="screen-reader-text">
+			Main Navigation		</h2>
+				<a class="navbar-brand" rel="home" href="https://www.cobaltstrike.com/" title="Cobalt Strike" itemprop="url">
+	<img src="https://www.cobaltstrike.com/app/uploads/2023/06/fta-cobalt-strike-light-1.svg"  class="img-fluid d-none d-xl-block d-lg-block mt-3 mb-4" alt="brand logo"/>
+	<img src="https://www.cobaltstrike.com/app/themes/helpsystems/img/fortra-delta-white.svg"  class="img-fluid d-block d-xl-none d-lg-none mx-2 " style="width:33px" alt="fortra mobile logo"/>
+	</a>
+				
+			<!-- <a class="d-block d-xl-none d-md-none d-lg-none"  href="#collapseSearch" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseSearch">  <i class="fas fa-search text-white fa-lg" ></i></a> -->
+
+			<button
+				class="navbar-toggler border-0"
+				type="button"
+				data-toggle="collapse"
+				data-target="#navbarNavDropdown"
+				aria-controls="navbarNavDropdown"
+				aria-expanded="false"
+				aria-label="Toggle navigation"
+			>
+				<span class="fas fa-bars fa-lg text-white"></span>
+			</button>
+			<!-- The WordPress Menu goes here -->
+			<div id="navbarNavDropdown" class="collapse navbar-collapse"><ul id="main-menu" class="navbar-nav ml-auto mb-2"><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2231" class="menu-btn is-style-btn-2 menu-item menu-item-type-custom menu-item-object-custom menu-item-2231 nav-item"><a title="Buy Now" href="/product/quote-request" class="nav-link text-nowrap mx-1 text-uppercase">Buy Now</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4540" class="has-mega-menu menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children dropdown menu-item-4540 nav-item"><a title="Product" href="/product" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle nav-link text-nowrap mx-1 text-uppercase" id="menu-item-dropdown-4540">Product</a>
+<ul class="dropdown-menu" aria-labelledby="menu-item-dropdown-4540" >
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4350" class="header menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children dropdown menu-item-4350 nav-item"><a title="Features" href="#" class="dropdown-item">Features</a>
+	<ul class="dropdown-menu" aria-labelledby="menu-item-dropdown-4540" >
+		<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4349" class="blue-caret menu-item menu-item-type-post_type menu-item-object-page menu-item-4349 nav-item"><a title="Beacon" href="https://www.cobaltstrike.com/product/features/beacon" class="dropdown-item">Beacon</a></li>
+		<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4348" class="blue-caret menu-item menu-item-type-post_type menu-item-object-page menu-item-4348 nav-item"><a title="Interoperability" href="https://www.cobaltstrike.com/product/features/interoperability" class="dropdown-item">Interoperability</a></li>
+		<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4351" class="blue-caret menu-item menu-item-type-post_type menu-item-object-page menu-item-4351 nav-item"><a title="Community" href="https://www.cobaltstrike.com/product/features/community" class="dropdown-item">Community</a></li>
+		<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4457" class="blue-caret menu-item menu-item-type-post_type menu-item-object-page menu-item-4457 nav-item"><a title="Flexibility" href="https://www.cobaltstrike.com/product/features/flexibility" class="dropdown-item">Flexibility</a></li>
+		<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2232" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2232 nav-item"><a title="View More Features &gt;" href="/product/features/" class="dropdown-item">View More Features &gt;</a></li>
+	</ul>
+</li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4352" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children dropdown menu-item-4352 nav-item"><a title="Interoperability" href="#" class="dropdown-item">Interoperability</a>
+	<ul class="dropdown-menu" aria-labelledby="menu-item-dropdown-4540" >
+		<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4353" class="blue-caret menu-item menu-item-type-post_type menu-item-object-page menu-item-4353 nav-item"><a title="Core Impact" href="https://www.cobaltstrike.com/product/core-impact" class="dropdown-item">Core Impact</a></li>
+		<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4355" class="blue-caret menu-item menu-item-type-post_type menu-item-object-page menu-item-4355 nav-item"><a title="Outflank Security Tooling" href="https://www.cobaltstrike.com/product/outflank-security-tooling" class="dropdown-item">Outflank Security Tooling</a></li>
+	</ul>
+</li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4356" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children dropdown menu-item-4356 nav-item"><a title="Bundles" href="#" class="dropdown-item">Bundles</a>
+	<ul class="dropdown-menu" aria-labelledby="menu-item-dropdown-4540" >
+		<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4358" class="blue-caret menu-item menu-item-type-custom menu-item-object-custom menu-item-4358 nav-item"><a title="Cobalt Strike + Core Impact" href="/resources/datasheets/advanced-bundle/" class="dropdown-item">Cobalt Strike + Core Impact</a></li>
+		<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4359" class="blue-caret menu-item menu-item-type-custom menu-item-object-custom menu-item-4359 nav-item"><a title="Cobalt Strike + Outflank Security Tooling" href="/resources/datasheets/red-team-bundle/" class="dropdown-item">Cobalt Strike + Outflank Security Tooling</a></li>
+		<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4360" class="blue-caret menu-item menu-item-type-custom menu-item-object-custom menu-item-4360 nav-item"><a title="Cobalt Strike, Core Impact, Outflank Security Tooling" href="/resources/datasheets/advanced-red-team-bundle/" class="dropdown-item">Cobalt Strike, Core Impact, Outflank Security Tooling</a></li>
+		<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4361" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4361 nav-item"><a title="View All Product Bundles &gt;" href="/product/bundles/" class="dropdown-item">View All Product Bundles &gt;</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2235" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children dropdown menu-item-2235 nav-item"><a title="Support" href="/support" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle nav-link text-nowrap mx-1 text-uppercase" id="menu-item-dropdown-2235">Support</a>
+<ul class="dropdown-menu" aria-labelledby="menu-item-dropdown-2235" >
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4369" class="blue-caret menu-item menu-item-type-post_type menu-item-object-page menu-item-4369 nav-item"><a title="Training" href="https://www.cobaltstrike.com/support/training" class="dropdown-item">Training</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4363" class="blue-caret menu-item menu-item-type-custom menu-item-object-custom menu-item-4363 nav-item"><a title="Community Kit" href="https://cobalt-strike.github.io/community_kit/" class="dropdown-item">Community Kit</a></li>
+</ul>
+</li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4541" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children dropdown menu-item-4541 nav-item"><a title="Resources" href="/resources" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle nav-link text-nowrap mx-1 text-uppercase" id="menu-item-dropdown-4541">Resources</a>
+<ul class="dropdown-menu" aria-labelledby="menu-item-dropdown-4541" >
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4365" class="blue-caret menu-item menu-item-type-post_type menu-item-object-page menu-item-4365 nav-item"><a title="Blog" href="https://www.cobaltstrike.com/blog" class="dropdown-item">Blog</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4370" class="blue-caret menu-item menu-item-type-post_type menu-item-object-page menu-item-4370 nav-item"><a title="Screenshots" href="https://www.cobaltstrike.com/resources/screenshots" class="dropdown-item">Screenshots</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4366" class="blue-caret menu-item menu-item-type-custom menu-item-object-custom menu-item-4366 nav-item"><a title="Datasheets" href="/resources?_sft_cta_type=datasheet" class="dropdown-item">Datasheets</a></li>
+	<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-4367" class="blue-caret menu-item menu-item-type-custom menu-item-object-custom menu-item-4367 nav-item"><a title="Videos" href="/resources?_sft_cta_type=video" class="dropdown-item">Videos</a></li>
+</ul>
+</li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-2238" class="custom-mega-menu-item mx-3 menu-item menu-item-type-custom menu-item-object-custom menu-item-2238 nav-item"><a title="  Search " href="#" class="nav-link text-nowrap mx-1 text-uppercase"><a class=" d-none d-xl-block d-lg-block nav-search jquery-once-1-processed search-show collapsed" href="#collapseSearch" style="width: 122px;color: #fff;text-align:right;padding-right: 1rem;width: 122px!important;height: 26px;position: relative;left: 7px;border: 1px solid #fff;border-radius: 16px;margin: 0.1875rem 0" data-toggle="collapse" role="button"> <i class="fal fa-search faicon-search fa-xs" aria-hidden="true"></i> <span class="text sr-only">Search</span> </a></a></li>
+</ul></div>
+
+			</div><!-- .container -->
+	
+	</nav><!-- #main-nav -->
+
+		<div class="container search-bar fixed-top collapse" id= "collapseSearch" >
+			<div class="row">
+				<div class="col-12 col-sm-10 offset-sm-1 col-lg-8 offset-lg-2">
+					<div id="search-box">
+						<div class="py-3">
+							
+<form role="search" class="search-form" method="get" action="https://www.cobaltstrike.com/" >
+	<label class="screen-reader-text" for="s-1">Search for:</label>
+	<div class="input-group">
+		<input type="search" class="field search-field form-control" id="s-1" name="s" value="" placeholder="Search &hellip;">
+					<span class="input-group-append">
+				<input type="submit" class="submit search-submit btn-1 " name="submit" value="Search">
+			</span>
+			</div>
+</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</header><!-- #wrapper-navbar -->
+
+<div class="header-banner"> 
+	<div class="jumbotron jumbotron-fluid bg-1 " 
+	style="background-image: " >
+	<div class="banner-wrapper">
+		<div class="container">
+			<p class="yoast-breadcrumbs m-0"><span><span><a href="https://www.cobaltstrike.com/">Home</a></span> » <span><a href="/blog/">Blog</a></span> » <span class="breadcrumb_last" aria-current="page">Cobalt Strike 4.8: (System) Call Me Maybe</span></span></p>			<header class="entry-header"><h1>Cobalt Strike 4.8: (System) Call Me Maybe</h1></header><!-- .entry-header -->			</div>
+	</div>
+	</div>
+</div>
+
+
+<div class="wrapper" id="page-wrapper">
+
+	<div class="container" id="content" tabindex="-1">
+		<div class="row">
+			<div class="col-lg-8 content-area" id="primary">
+
+				<main class="site-main" id="main">
+					<article class="post-2877 post type-post status-publish format-standard hentry cornerstone-development cornerstone-releases" id="post-2877">
+
+
+<div class="entry-content">
+
+	
+<p>Cobalt Strike 4.8 is now available. This release sees support for system calls, options to specify payload guardrails, a new token store, and more.&nbsp;&nbsp;</p>
+
+<p>We had originally planned to get this release out late in 2022 but progress was stymied due to the <a href="https://www.cobaltstrike.com/blog/out-of-band-update-cobalt-strike-4-7-1/" target="_blank" rel="noreferrer noopener">4.7.1</a> and <a href="https://www.cobaltstrike.com/blog/out-of-band-update-cobalt-strike-4-7-2/" target="_blank" rel="noreferrer noopener">4.7.2</a> patch releases that we had to put out to fix vulnerabilities that were reported in the 4.7 release. We spent a few development cycles performing a security review of the code and working on some technical debt, and then it was the holiday season. It’s here now though, and better late than never!&nbsp;&nbsp;</p>
+
+<p>Before getting into the details of this release, I just wanted to mention that you should now start to see much more content from us to supplement main product releases. <a href="https://www.cobaltstrike.com/blog/behind-the-mask-spoofing-call-stacks-dynamically-with-timers/" target="_blank" rel="noreferrer noopener">William Burgess recently released his first blog post since joining the Cobalt Strike team</a> and he will be playing a key role in providing technical guidance on the future direction of the product. We have more blog posts and tooling coming over the next few weeks and months, starting with a series on UDRL development (the first of which should drop next week). Coming later in the year are some <strong>huge</strong> changes to Cobalt Strike itself. More details on that will come in a follow-up blog post soon. We know that our users are struggling with evasion and have reported other pain points. As I mentioned in my <a href="https://www.cobaltstrike.com/blog/cobalt-strike-roadmap-update/" target="_blank" rel="noreferrer noopener">roadmap update</a> last year, we have been aggressively building out our R&amp;D team and while it&#8217;s taken a while to do that and get all of our ducks in a row, you&#8217;ll now really start to see the benefits of those behind-the-scenes changes. Now, back to the 4.8 release.&nbsp;</p>
+
+<h3 class="wp-block-heading">System Calls Support</h3>
+
+<p>This release sees the addition of support for direct and indirect system calls. We have added support for a number of system calls, specifically: &nbsp;</p>
+
+<ul>
+<li><em>CloseHandle</em></li>
+
+
+
+<li><em>CreateFileMapping</em></li>
+
+
+
+<li><em>CreateRemoteThread</em></li>
+
+
+
+<li><em>CreateThread</em></li>
+
+
+
+<li><em>GetThreadContext</em></li>
+
+
+
+<li><em>MapViewOfFile</em></li>
+
+
+
+<li><em>OpenProcess</em></li>
+
+
+
+<li><em>OpenThread</em></li>
+
+
+
+<li><em>ResumeThread</em></li>
+
+
+
+<li><em>SetThreadContext</em></li>
+
+
+
+<li><em>UnmapViewOfFile</em></li>
+
+
+
+<li><em>VirtualAlloc</em></li>
+
+
+
+<li><em>VirtualAllocEx</em></li>
+
+
+
+<li><em>VirtualFree</em></li>
+
+
+
+<li><em>VirtualProtect</em></li>
+
+
+
+<li><em>VirtualProtectEx</em></li>
+
+
+
+<li><em>VirtualQuery</em></li>
+</ul>
+
+<p>The stageless Beacon payload generation dialog has been updated to allow you to specify the system call method to be used at execution time. The available options are: &nbsp;</p>
+
+<p><strong>None</strong>: Use the standard Windows API function<br><strong>Direct</strong>: Use the Nt* version of the function<br><strong>Indirect</strong>: Jump to the appropriate instruction within the Nt* version of the function</p>
+
+<figure class="wp-block-image size-full is-resized"><img decoding="async" src="https://www.cobaltstrike.com/app/uploads/2023/07/image-2.png" alt="" class="wp-image-12015" width="347" height="292"/></figure>
+
+<p>It is important to note that there are some commands and workflows that inject or spawn a new Beacon that do not allow you to set the initial system call method. Those commands/workflows are:</p>
+
+<ul>
+<li><em>elevate</em>&nbsp;</li>
+
+
+
+<li><em>inject</em>&nbsp;</li>
+
+
+
+<li><em>jump</em>&nbsp;</li>
+
+
+
+<li><em>spawn</em>&nbsp;</li>
+
+
+
+<li><em>spawnas</em>&nbsp;</li>
+
+
+
+<li><em>spawnu</em>&nbsp;</li>
+
+
+
+<li><em>teamserver responding to a stageless payload request</em>&nbsp;</li>
+
+
+
+<li><em>teamserver responding to an External C2 payload request</em>&nbsp;</li>
+</ul>
+
+<p>The <strong>stage.syscall_method</strong> in the MalleableC2 profile controls the method used at execution time, and you can use the <strong>syscall-method [method]</strong> command to modify the method that will be used for subsequent commands. Additionally, <strong>syscall-method</strong> without any arguments will query and return the current method. &nbsp;</p>
+
+<p>System call support is something that we intend to continue to update and enhance in future releases. Your feedback on this is welcomed.&nbsp;&nbsp;</p>
+
+<h3 class="wp-block-heading">Generate Payloads With Built-In Guardrails&nbsp;</h3>
+
+<p>Support has been added for payload guardrails, which can be set at the listener level and then, if required, overridden when generating a payload. &nbsp;</p>
+
+<p>Guardrails can be set based on the following criteria:&nbsp;</p>
+
+<ul>
+<li><strong>IP address</strong>: This can be a single IP address or a range using a wildcard to replace the rightmost octet(s). For example, 123.123.123.123, 123.123.123.*, 123.123.*.* and 123.*.*.* are all valid inputs. 123.*.123.* is not.&nbsp;</li>
+
+
+
+<li><strong>Username</strong>: This can be a specific user<s> </s>name, or you can prefix/suffix a wildcard (i.e. *user or user*). The username field is case insensitive.&nbsp;&nbsp;</li>
+
+
+
+<li><strong>Server name</strong>: Again, this can be a specific server name, or you can prefix/suffix a wildcard (i.e. *server or server*). The server name field is case insensitive.&nbsp;</li>
+
+
+
+<li><strong>Domain</strong>: As with username and server name, the domain field can either be a specific domain or you can prefix/suffix a wildcard (i.e. *domain or domain*). The domain name field is also case insensitive.</li>
+</ul>
+
+<p>The listener dialog has a new “Guardrails” option at the bottom of the screen that allows you to set and update guardrails for that listener.&nbsp;&nbsp;</p>
+
+<figure class="wp-block-image size-full is-resized"><img decoding="async" loading="lazy" src="https://www.cobaltstrike.com/app/uploads/2023/07/image-5.png" alt="" class="wp-image-12018" width="387" height="459"/></figure>
+
+<figure class="wp-block-image size-full is-resized"><img decoding="async" loading="lazy" src="https://www.cobaltstrike.com/app/uploads/2023/07/image-3.png" alt="" class="wp-image-12016" width="347" height="163"/></figure>
+
+<p>When generating a payload, the guardrails value from the associated listener is used as a default value.&nbsp;&nbsp;</p>
+
+<figure class="wp-block-image size-full is-resized"><img decoding="async" loading="lazy" src="https://www.cobaltstrike.com/app/uploads/2023/07/image-8.png" alt="" class="wp-image-12021" width="366" height="307"/></figure>
+
+<figure class="wp-block-image size-full is-resized"><img decoding="async" loading="lazy" src="https://www.cobaltstrike.com/app/uploads/2023/07/image-7.png" alt="" class="wp-image-12020" width="348" height="162"/></figure>
+
+<p>You can use the default values or override them to set specific values for the payload being created. Setting specific values here does not change the default values set at the listener level.<br></p>
+
+<h3 class="wp-block-heading">Multi-Byte Support For Obfuscating Beacon’s Reflective DLL’s Import Table</h3>
+
+<p>We have made a change to the obfuscation routine used for the <strong>stage.obfuscate</strong> MalleableC2 option which relates to how Beacon’s Reflective DLL’s import table is obfuscated. </p>
+
+<p>Part of this process involved moving from a fixed, single byte XOR key to a randomly generated multi-byte XOR key. The single byte XOR mask was easily signatured and caught by tools such as YARA. Moving to a randomly generated multi-byte XOR key should help address those issues.&nbsp;</p>
+
+<h3 class="wp-block-heading">Sleep Mask Updates</h3>
+
+<p>A number of updates have been made to the Sleep Mask. The main change is that the Sleep Mask size limit has been increased from 8192 to 16384 bytes. Other changes include:&nbsp;</p>
+
+<ul>
+<li>Support for the use of system calls with the MASK_TEXT_SECTION capability</li>
+
+
+
+<li>The addition of define tags for the Windows API functions to remove the need for LIBRARY$Function syntax</li>
+
+
+
+<li>The implementation of evasive sleep via stack spoofing (x64 only). Related changes include the addition of a bypass for Control Flow Guard (CFG), as well as the addition of a helper utility (<em>getFunctionOffset</em>)</li>
+</ul>
+
+<h3 class="wp-block-heading">Token Store</h3>
+
+<p>One change that we&#8217;ve had on the backlog for a while was the addition of a token store, to facilitate the hot swapping of access tokens. Windows tokens are process specific; hence each Beacon has its own token store with its own tokens. Please be aware that those tokens are therefore only available to be used by that specific Beacon. </p>
+
+<p>The token store is based around the new <strong>token-store</strong> command. The command supports a number of options that perform specific functions (all supported by tab completion). Available functions are as follows:</p>
+
+<p><strong>token-store steal [pid,…] &lt;OpenProcessToken access mask&gt;</strong><br>This steals the token(s) from the specificed PID(s). Use commas to separate each PID. This command will steal the token and put it into the token store, but will not impersonate straight away. The <strong>steal-and-use</strong> command should be used for that purpose (although it should be noted that <strong>steal-and-use</strong> only supports a single PID). This command supports the optional OpenProcessToken access mask like the existing <strong>steal_token</strong> command.&nbsp;</p>
+
+<figure class="wp-block-image size-full"><img decoding="async" src="https://www.cobaltstrike.com/app/uploads/2023/07/image-11.png" alt="" class="wp-image-12024"/></figure>
+
+<p><strong>token-store use [id]</strong><br>This tasks Beacon to use the token with the specified ID from the token store.&nbsp;&nbsp;</p>
+
+<figure class="wp-block-image size-full"><img decoding="async" src="https://www.cobaltstrike.com/app/uploads/2023/07/image-12.png" alt="" class="wp-image-12025"/></figure>
+
+<p><strong>token-store steal-and-use [pid] &lt;OpenProcessToken access mask&gt;</strong><br>This allows you to steal the token from the specified PID, add it to the token store and immediately use it. This command supports the optional OpenProcessToken access mask like the existing <strong>steal_token</strong> command.&nbsp;</p>
+
+<figure class="wp-block-image size-full"><img decoding="async" src="https://www.cobaltstrike.com/app/uploads/2023/07/image-13.png" alt="" class="wp-image-12026"/></figure>
+
+<p><strong>token-store show</strong>&nbsp;<br>This displays the tokens in the token store.&nbsp;</p>
+
+<figure class="wp-block-image size-full"><img decoding="async" src="https://www.cobaltstrike.com/app/uploads/2023/07/image-14.png" alt="" class="wp-image-12027"/></figure>
+
+<p><strong>token-store remove [id,…]</strong><br>This allows you to remove the token(s) corresponding to the specific ID(s) from the token store. Use commas to specify multiple IDs.&nbsp;&nbsp;</p>
+
+<figure class="wp-block-image size-full"><img decoding="async" src="https://www.cobaltstrike.com/app/uploads/2023/07/image-15.png" alt="" class="wp-image-12028"/></figure>
+
+<p><strong>token-store remove-all</strong>&nbsp;<br>This removes all tokens from the token store.&nbsp;</p>
+
+<figure class="wp-block-image size-full"><img decoding="async" src="https://www.cobaltstrike.com/app/uploads/2023/07/image-16.png" alt="" class="wp-image-12029"/></figure>
+
+<p>One additional point is that tokens can also be stolen via the process list in the GUI. Steal a token in the usual way (i.e. Explore -&gt; Process List, select one or more PIDs and click on Steal Token) and then make sure the “store token in the token store” checkbox is checked before stealing the token. You are also able to select multiple Beacons at once before opening the process list.&nbsp;&nbsp;</p>
+
+<p>Finally, we have also implemented corresponding aggressor functions to the options described above, i.e.:&nbsp;&nbsp;</p>
+
+<ul>
+<li><em>btoken_store_remove</em>&nbsp;</li>
+
+
+
+<li><em>btoken_store_show</em>&nbsp;</li>
+
+
+
+<li><em>btoken_store_steal_and_use</em>&nbsp;</li>
+
+
+
+<li><em>btoken_s</em><em>tore_steal</em>&nbsp;</li>
+
+
+
+<li><em>btoken_store_remove_all</em>&nbsp;</li>
+
+
+
+<li><em>btoken_store_use</em>&nbsp;</li>
+</ul>
+
+<h3 class="wp-block-heading">ETW Blinding&nbsp;</h3>
+
+<p>This release also sees the addition of support for ETW blinding via patching for the <strong>execute-assembly</strong> and <strong>powerpick</strong> commands. While there is limited support in this release, this is something that we will look to build on in future releases.&nbsp;&nbsp;</p>
+
+<p>The <strong>execute-assembly</strong> and <strong>powerpick</strong> commands now have an optional <em>PATCHES</em> parameter, specified as follows:&nbsp;</p>
+
+<p><strong><em>execute-assembly &#8220;[PATCHES: [patch-rule] [patch-rule] [patch-rule] [patch-rule]]&#8221; [/path/to/file.exe] [arguments]</em>&nbsp;</strong></p>
+
+<p>and&nbsp;&nbsp;</p>
+
+<p><strong><em>powerpick &#8220;[PATCHES: [patch-rule] [patch-rule] [patch-rule] [patch-rule]]&#8221; [commandlet] [arguments]</em>&nbsp;</strong></p>
+
+<p>The optional PATCHES parameter can modify functions in memory for the process. Up to four <em>patch-rule</em> rules can be specified (delimited by spaces), with each <em>patch-rule</em> being made up of a library, function, offset and hex patch value, for example: <strong>[library],[function],[offset],[hex-patch-value]</strong>, where:</p>
+
+<ul>
+<li><em><strong>library</strong> </em>can be 1 &#8211; 260 characters&nbsp;&nbsp;</li>
+
+
+
+<li><em><strong>function</strong> </em>can be 1-256 characters&nbsp;</li>
+
+
+
+<li><em><strong>offset</strong> </em>is the offset from the start of the executable function and can be 0 – 65535&nbsp;</li>
+
+
+
+<li><em><strong>hex-patch-value</strong> </em>can be 2 &#8211; 200 hex characters (0 &#8211; 9, A &#8211; F) and the length must be and even number (hex pairs)</li>
+</ul>
+
+<p>Further information on the <em>patch-rule</em> syntax can be found in the documentation.&nbsp;&nbsp;</p>
+
+<h3 class="wp-block-heading">Sync Data At Teamserver Startup&nbsp;</h3>
+
+<p>There has been a long-standing issue within Cobalt Strike whereby any data retrieved from a target (for example, screenshots, keylog data etc.) is unavailable in the client after the teamserver is restarted. This issue has been addressed, and data that was previously “lost” to the UI is now persisted between restarts.&nbsp;&nbsp;</p>
+
+<p>We have also added a new script, <em><strong>clearteamserverdata</strong></em>, that can be used to delete all data after an engagement has completed.&nbsp;</p>
+
+<h3 class="wp-block-heading">Change How License Expiration Date Is Processed&nbsp;</h3>
+
+<p>A key update related to product security is a change to how the license expiration date is processed. Previously, the expiration date was checked at teamserver startup and if it was valid, the teamserver was able to start. No further checks were performed and the teamserver was able to run until shut down by the operator.</p>
+
+<p>We have tightened this processing up so that the license expiration date is checked on a daily basis. The reasoning behind the previous behaviour was that it wasn’t always convenient or logistically possible to run an update in the middle of an engagement (to grab a new authorization file with an updated expiration date). Nor was it convenient under those circumstances to restart the teamserver following an update. We have added mitigations for those scenarios in the new processing, meaning that there will be no impact on operations while refreshing your authorization file. If you need to update your license while an engagement is running, please consult the documentation for information on how you can do this. We do recommend, however, that you consider your license expiration date before starting a new engagement and avoid this situation occurring, if at all possible. </p>
+
+<p>To make sure that you don’t get caught out by an expiring license, we have added a couple of new banners to the client UI.&nbsp;&nbsp;</p>
+
+<p>Starting 45 days before your license is due to expire, a warning banner will appear in the client, informing you that your license is expiring and when it is due to expire. This warning message can be dismissed but will reappear each day when the expiration date is checked. This should provide sufficient time to renew your license key if this has not already been taken care of:</p>
+
+<figure class="wp-block-image size-large"><img decoding="async" src="https://www.cobaltstrike.com/app/uploads/2023/01/image.png" alt="" class="wp-image-12013"/></figure>
+
+<p>If you fail to renew your license before it expires, you will have a 14-day grace period in which to do so. For the duration of that grace period, you will see an error banner that cannot be dismissed:</p>
+
+<figure class="wp-block-image size-large"><img decoding="async" src="https://www.cobaltstrike.com/app/uploads/2023/01/image-1.png" alt="" class="wp-image-12014"/></figure>
+
+<p>After the grace period has ended, if your license has not been renewed and the authorization file refreshed, the teamserver will shut down and you will be unable to restart it until you have renewed your license.&nbsp;&nbsp;</p>
+
+<h3 class="wp-block-heading">Quality Of Life Changes&nbsp;</h3>
+
+<p>In addition to the features already mentioned, we have also added a number of smaller changes, mainly requested by our users, as follows:</p>
+
+<h3 class="wp-block-heading">Added Flexibility To Specifying Sleep Time</h3>
+
+<p>A small change requested by a user was to make the sleep time easier to set. Rather than only being able to specify the sleep time in seconds, you can now also specify days, hours and minutes by suffixing those values with “d”, “h” and “m” respectively.&nbsp;&nbsp;</p>
+
+<p>A usage example is <strong>sleep 2d 13h 45m 8s 30j</strong> which translates to “sleep for 2 days, 13 hours, 45 minutes, 8 seconds with 30% jitter”.&nbsp;</p>
+
+<p>We have also added a new aggressor function, <strong>bsleepu</strong> that works in the same way.&nbsp;&nbsp;</p>
+
+<figure class="wp-block-image size-full is-resized"><img decoding="async" loading="lazy" src="https://www.cobaltstrike.com/app/uploads/2023/07/image-10.png" alt="" class="wp-image-12023" width="321" height="178"/></figure>
+
+<h3 class="wp-block-heading">Display Current Token In The UI</h3>
+
+<p>Another user request was to display the current token in the client UI. This gelled nicely with the new token store and you are now able to see the current token the table view and status bar in brackets alongside the user name.&nbsp;&nbsp;</p>
+
+<p>Related to this change, we also addressed the issue whereby <strong>make_token</strong> would report the wrong user name (i.e. the user name of the current Beacon process) due to a Windows API limitation. This has been addressed and the correct username appears in brackets.&nbsp; &nbsp;</p>
+
+<figure class="wp-block-image size-full is-resized"><img decoding="async" loading="lazy" src="https://www.cobaltstrike.com/app/uploads/2023/07/image-17.png" alt="" class="wp-image-12030" width="427" height="100"/></figure>
+
+<h3 class="wp-block-heading">Copy/Paste From The Beacon Output Pane&nbsp;</h3>
+
+<p>We have added support for copying and pasting commands from the Beacon output pane.&nbsp;&nbsp;</p>
+
+<p>CTRL+C copies and CTRL+X cuts the selected text from either the output pane or the command line. Text can only be selected in the output pane or command line, not both. CTRL+V pastes text from the clipboard onto the command line. This works for any console window (for example, the Beacon console, SSH console, script console, event log and web log).&nbsp;&nbsp;</p>
+
+<h3 class="wp-block-heading">Chain Multiple Commands In A Single Mimikatz Call&nbsp;</h3>
+
+<p>The <strong>mimikatz</strong> command has been updated to support chaining multiple commands in a single operation. This also applies to the <strong>bmimikatz</strong> and <strong>bmimikazt_small </strong>aggressor functions (although <strong>bmimikatz_small</strong> is limited to lsadump::dcsync, sekurlsa::logonpasswords and sekurlsa::pth).&nbsp;&nbsp;</p>
+
+<p>Commands can be chained by adding a semicolon as a delimiter between commands, for example: <br><strong>mimikatz standard::coffee;standard::coffee</strong>&nbsp;&nbsp;</p>
+
+<p>Note that the semicolon can still be escaped if it is required in a command (i.e. “\;”). Also, the command length is limited to 511 characters to ensure that the final character in the string is EOS (\0).&nbsp;&nbsp;</p>
+
+<h3 class="wp-block-heading">Specify Exit Function On Stageless Windows Executable Dialog</h3>
+
+<p>A change was made in the 4.7 release to allow you to specify the exit option (either “thread” or “process”) on the Stageless Payload Generator dialog.&nbsp; A similar change has now been made to the Stageless Windows Executable dialog that also allows you to specify the exit option (“thread” or “process”).&nbsp;&nbsp;</p>
+
+<figure class="wp-block-image size-full is-resized"><img decoding="async" loading="lazy" src="https://www.cobaltstrike.com/app/uploads/2023/07/image-9.png" alt="" class="wp-image-12022" width="358" height="301"/></figure>
+
+<h3 class="wp-block-heading">Arsenal Kit Checksum</h3>
+
+<p>One final change to mention, again requested by a user, was to add a checksum for the Arsenal Kit. This has been done and it can be found at <a href="https://download.cobaltstrike.com/scripts">https://download.cobaltstrike.com/scripts </a>.</p>
+
+<p></p>
+
+<p>To see a full list of what’s new in Cobalt Strike 4.8, please check out the <a href="https://download.cobaltstrike.com/releasenotes.txt" target="_blank" rel="noreferrer noopener">release notes</a>. While licensed users can <a href="https://www.cobaltstrike.com/help-update-cobalt-strike" target="_blank" rel="noreferrer noopener">run the update program</a> to get the latest version, <strong>we recommend that you download version 4.8 from scratch from <a href="https://download.cobaltstrike.com/download" target="_blank" rel="noreferrer noopener">the website</a> to get the new update application</strong>. This is because the TLS certificates on <em>download.cobaltstrike.com</em> and <em>verify.cobaltstrike.com</em> will be updated soon, and the existing updater will report errors if it isn’t updated. To purchase Cobalt Strike or learn more, please <a href="https://www.cobaltstrike.com/quote-request/" target="_blank" rel="noreferrer noopener">contact us</a>.&nbsp;</p>
+
+</div><!-- .entry-content -->
+
+<footer class="entry-footer">
+
+	
+</footer><!-- .entry-footer -->
+
+</article><!-- #post-2877 -->
+
+
+				</main>
+			</div> <!-- #primary -->
+			
+<div class="col-lg-4 align-self-start resource-sidebar widget-area"><!-- #resource-sidebar -->
+     
+        <div class="sidebar-content bg-7 mb-3">
+        <div class=" container">
+            <div class="row">
+                <div class="col-12">
+                                        
+                                            <div class="sidebar-content p-3">
+                            <div class="block-title text-uppercase">
+                            RELATED SOLUTIONS
+                            </div>
+                            <ul class="list-group list-group-flush pt-2">
+                            <li class="list-unstyled"><a href="https://www.cobaltstrike.com/blog?_sft_cornerstone=development" title="Development">Development</a></li><li class="list-unstyled"><a href="https://www.cobaltstrike.com/blog?_sft_cornerstone=releases" title="Releases">Releases</a></li>                            </ul>
+                        </div>
+                        
+                </div>  <!-- #column -->                                                                                                                                                                                                                 
+            </div> <!-- #row --> 
+        </div> <!-- #container --> 
+    </div>  <!-- #sidebar-content -->
+          
+</div><!-- #resource-sidebar -->
+		</div><!-- .row -->
+	</div><!-- #container -->
+</div><!-- #page-wrapper -->
+
+
+
+<footer class="site-footer footer container-fluid">
+   <div id="footer-center">
+      <div class="region region-footer">
+         <div class="container">
+            <div class="row">
+               <div class="col-lg-2 text-left text-lg-center">
+                  <a class="logo" href="https://www.fortra.com" title="Home">
+                  <img src="/app/themes/helpsystems/img/wp-upstream-ft-foot-logo.svg" />
+                  </a>
+               </div>
+               <div class="col-lg-7 offset-lg-1 text-center">
+               <div class="contextual-region block block-block-content">
+                     <div class="content">
+                        <div class="row">
+                           <div class="col-md-7">
+                              <div class="container-fluid">
+                                 <ul class="d-flex pl-0 justify-content-center icons">
+
+
+
+                                                                                  <li class="px-1 footer-icon">
+                                                  <a href="+1 800-328-1000">
+                                                     <span class="icon">
+                                                        <i class="fal fa-phone-volume" aria-hidden="true"></i>
+                                                     </span>
+                                                     <span class="text comm-links d-block"
+                                                        id="comm-links-telephone">+1 800-328-1000
+                                                     </span>
+                                                  </a>
+                                               </li>                                               <li class="px-1 footer-icon">
+                                                  <a href="/cdn-cgi/l/email-protection#523b3c343d12343d202620337c313d3f">
+                                                     <span class="icon">
+                                                        <i class="fal fa-envelope" aria-hidden="true"></i>
+                                                     </span>
+                                                     <span class="text comm-links d-block"
+                                                        id="comm-links-email">Email Us
+                                                     </span>
+                                                  </a>
+                                               </li>                                               <li class="px-1 footer-icon">
+                                                  <a href="https://community.fortra.com/support">
+                                                     <span class="icon">
+                                                        <i class="fal fa-headset" aria-hidden="true"></i>
+                                                     </span>
+                                                     <span class="text comm-links d-block"
+                                                        id="comm-links-support">Request Support
+                                                     </span>
+                                                  </a>
+                                               </li>                                               <li class="px-1 footer-icon">
+                                                  <a href="https://www.fortra.com/resources/fortra-subscription-center">
+                                                     <span class="icon">
+                                                        <i class="fal fa-hand-pointer" aria-hidden="true"></i>
+                                                     </span>
+                                                     <span class="text comm-links d-block"
+                                                        id="comm-links-subscribe">Subscribe
+                                                     </span>
+                                                  </a>
+                                               </li>
+
+                                 </ul>
+                              </div>
+                           </div>
+                           <div class="col-md-5">
+                              <ul
+                                 class="d-flex pl-0 justify-content-center icons"
+                                 itemscope=""
+                                 itemtype="http://schema.org/Organization"
+                                 >
+
+                                               <li class="px-1 footer-icon social">
+                                                  <a href="https://twitter.com/CoreAdvisories?s=20">
+                                                     <span class="icon">
+                                                        <i class="fab fa-twitter" aria-hidden="true"></i>
+                                                     </span>
+                                                     <span class="text comm-links d-block"
+                                                        id="comm-links-twitter">Twitter
+                                                     </span>
+                                                  </a>
+                                               </li>                                               <li class="px-1 footer-icon social">
+                                                  <a href="https://www.youtube.com/channel/UCXr2bT_K0WpaBrhRlhpFwdw">
+                                                     <span class="icon">
+                                                        <i class="fab fa-youtube" aria-hidden="true"></i>
+                                                     </span>
+                                                     <span class="text comm-links d-block"
+                                                        id="comm-links-youtube">Youtube
+                                                     </span>
+                                                  </a>
+                                               </li>
+                              </ul>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+
+
+            
+
+	<!-- ******************* The Footer Full-width Widget Area ******************* -->
+
+	<div class="wrapper" id="wrapper-footer-full" role="complementary">
+
+		<div class="container" id="footer-full-content" tabindex="-1">
+
+			<div class="row">
+
+				<div id="nav_menu-2" class="footer-widget widget_nav_menu widget-count-5 col-md-2"><h3 class="d-none widget-title">Footer Menu 1</h3><div class="menu-footer-menu-1-container"><ul id="menu-footer-menu-1" class="menu"><li id="menu-item-4431" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-4431"><a href="/product/features/">Features</a>
+<ul class="sub-menu">
+	<li id="menu-item-4432" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4432"><a href="/product/features/beacon">Beacon</a></li>
+	<li id="menu-item-4433" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4433"><a href="/product/features/interoperability">Interoperablity</a></li>
+	<li id="menu-item-4434" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-4434"><a href="/product/features/community">Community</a>
+	<ul class="sub-menu">
+		<li id="menu-item-4435" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4435"><a href="/product/features/">All Features &gt;</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+</ul></div></div><!-- .footer-widget --><div id="nav_menu-3" class="footer-widget widget_nav_menu widget-count-5 col-md-2"><h3 class="d-none widget-title">Footer Menu 2</h3><div class="menu-footer-menu-2-container"><ul id="menu-footer-menu-2" class="menu"><li id="menu-item-4436" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-4436"><a href="/product/features/interoperability">Interoperability</a>
+<ul class="sub-menu">
+	<li id="menu-item-4437" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4437"><a href="/product/core-impact">Core Impact</a></li>
+	<li id="menu-item-4438" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4438"><a href="/product/outflank-security-tooling">Outflank Security Tooling</a></li>
+</ul>
+</li>
+</ul></div></div><!-- .footer-widget --><div id="nav_menu-4" class="footer-widget widget_nav_menu widget-count-5 col-md-2"><h3 class="d-none widget-title">Footer Menu 3</h3><div class="menu-footer-menu-3-container"><ul id="menu-footer-menu-3" class="menu"><li id="menu-item-4439" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-4439"><a href="/support">Support</a>
+<ul class="sub-menu">
+	<li id="menu-item-4440" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4440"><a href="/support/training">Training</a></li>
+	<li id="menu-item-4441" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4441"><a href="https://cobalt-strike.github.io/community_kit">Community Kit</a></li>
+</ul>
+</li>
+</ul></div></div><!-- .footer-widget --><div id="nav_menu-5" class="footer-widget widget_nav_menu widget-count-5 col-md-2"><h3 class="d-none widget-title">Footer Menu 4</h3><div class="menu-footer-menu-4-container"><ul id="menu-footer-menu-4" class="menu"><li id="menu-item-4442" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-4442"><a href="/resources">Resources</a>
+<ul class="sub-menu">
+	<li id="menu-item-4443" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4443"><a href="/blog">Blog</a></li>
+	<li id="menu-item-4444" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4444"><a href="/screenshots">Screenshots</a></li>
+	<li id="menu-item-4445" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-4445"><a href="/resources?_sft_cta_type=datasheet">Datasheets</a>
+	<ul class="sub-menu">
+		<li id="menu-item-4446" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4446"><a href="/resources">All Resources &gt;</a></li>
+	</ul>
+</li>
+</ul>
+</li>
+</ul></div></div><!-- .footer-widget --><div id="nav_menu-6" class="footer-widget widget_nav_menu widget-count-5 col-md-2"><h3 class="d-none widget-title">Footer Menu 5</h3><div class="menu-footer-menu-5-container"><ul id="menu-footer-menu-5" class="menu"><li id="menu-item-4447" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-4447"><a href="/about">About</a>
+<ul class="sub-menu">
+	<li id="menu-item-4448" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-4448"><a href="https://www.cobaltstrike.com/corporate-compliance-and-ethics/">Corporate Compliance &#038; Ethics</a></li>
+</ul>
+</li>
+</ul></div></div><!-- .footer-widget -->
+			</div>
+
+		</div>
+
+	</div><!-- #wrapper-footer-full -->
+
+	            <div class="row copyright">
+               <div class="col">
+                  <section class="row region region-footer-bottom">
+                        <div class="content bottom-footer-links">
+                           <div class="col">
+                              <h3 class="d-inline-block">
+                                 <a href="https://www.fortra.com/contact-us">Contact Information</a>
+                              </h3>
+                              <h3 class="d-inline-block">
+                                 <a href="https://www.fortra.com/privacy-policy">Privacy Policy</a>
+                              </h3>
+                              <h3 class="d-inline-block">
+                                 <a href="https://www.fortra.com/cookie-policy">Cookie Policy</a>
+                              </h3>
+                              <h3 class="d-inline-block">
+                                 <a href="https://www.fortra.com/impressum">Impressum</a>
+                              </h3>
+                              Copyright &copy; Fortra, LLC and its group of companies. All
+                              trademarks and registered trademarks are the property of
+                              their respective owners.
+                           </div>
+                        </div>
+                     </div>
+                  </section>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/card-carousel/script.js?ver=6.2.2' id='card-carousel-script-js'></script>
+<script src='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/image-carousel/script.js?ver=6.2.2' id='image-carousel-script-js'></script>
+<script src='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/logo-carousel/script.js?ver=6.2.2' id='logo-carousel-script-js'></script>
+<script src='https://www.cobaltstrike.com/app/themes/helpsystems/blocks/testimonial-carousel/script.js?ver=6.2.2' id='testimonial-carousel-script-js'></script>
+<script src='https://www.cobaltstrike.com/wp/wp-includes/js/jquery/ui/core.min.js?ver=1.13.2' id='jquery-ui-core-js'></script>
+<script src='https://www.cobaltstrike.com/wp/wp-includes/js/jquery/ui/datepicker.min.js?ver=1.13.2' id='jquery-ui-datepicker-js'></script>
+<script id='jquery-ui-datepicker-js-after'>
+jQuery(function(jQuery){jQuery.datepicker.setDefaults({"closeText":"Close","currentText":"Today","monthNames":["January","February","March","April","May","June","July","August","September","October","November","December"],"monthNamesShort":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"nextText":"Next","prevText":"Previous","dayNames":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],"dayNamesShort":["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],"dayNamesMin":["S","M","T","W","T","F","S"],"dateFormat":"MM d, yy","firstDay":1,"isRTL":false});});
+</script>
+
+
+</body>
+</html>
